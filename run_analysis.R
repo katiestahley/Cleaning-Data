@@ -13,16 +13,15 @@
 # Files created: test_train.csv
 
 # Set working directory and load libraries
-setwd("\\3.CleaningData")
+
 library(dplyr)
 library(data.table)
 
 # Download data and unzip the folder  
 fileULR <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-zipfolder <- download.file(fileULR, destfile = "C:\\Users\\katelyns\\Desktop\\KatieData\\3.CleaningData\\UCI HAR Dataset.zip")
+zipfolder <- download.file(fileULR, destfile = "\\UCI HAR Dataset.zip")
 unzip("UCI HAR Dataset.zip", exdir = "UCI HAR data")
 #Reset working directory to new UCI HAR data folder
-setwd("\\3.CleaningData\\UCI HAR data")
 
 # Read the files into R
 files <- list.files(path = ".", recursive = TRUE, pattern = "\\.txt", full.names = TRUE)
@@ -105,6 +104,40 @@ head(DF)
 # Extract only the relevant variables (type, subject, activity, mean, and std)
 DF<- select(DF, matches("type|subject|activity|mean|std"))
 
+
+# Create a tidy variable names vector and rename columns
+colnames(DF) <- c("type", "subject", "activity", "tbodyacc-mean-x", "tbodyacc-mean-y", 
+                  "tbodyacc-mean-z", "tbodyacc-std-x", "tbodyacc-std-y", 
+                  "tbodyacc-std-z", "tgravityacc-mean-x", "tgravityacc-mean-y", 
+                  "tgravityacc-mean-z", "tgravityacc-std-x", "tgravityacc-std-y", 
+                  "tgravityacc-std-z", "tbodyaccjerk-mean-x", "tbodyaccjerk-mean-y", 
+                  "tbodyaccjerk-mean-z", "tbodyaccjerk-std-x", "tbodyaccjerk-std-y", 
+                  "tbodyaccjerk-std-z", "tbodygyro-mean-x", "tbodygyro-mean-y", 
+                  "tbodygyro-mean-z", "tbodygyro-std-x", "tbodygyro-std-y", 
+                  "tbodygyro-std-z", "tbodygyrojerk-mean-x", "tbodygyrojerk-mean-y", 
+                  "tbodygyrojerk-mean-z", "tbodygyrojerk-std-x", "tbodygyrojerk-std-y", 
+                  "tbodygyrojerk-std-z", "tbodyaccmag-mean", "tbodyaccmag-std", 
+                  "tgravityaccmag-mean", "tgravityaccmag-std", "tbodyaccjerkmag-mean", 
+                  "tbodyaccjerkmag-std()", "tbodygyromag-mean", "tbodygyromag-std", 
+                  "tbodygyrojerkmag-mean", "tbodygyrojerkmag-std", "fbodyacc-mean-x", 
+                  "fbodyacc-mean-y", "fbodyacc-mean-z", "fbodyacc-std-x", 
+                  "fbodyacc-std-y", "fbodyacc-std-z", "fbodyacc-meanfreq-x", 
+                  "fbodyacc-meanfreq-y", "fbodyacc-meanfreq-z", "fbodyaccjerk-mean-x", 
+                  "fbodyaccjerk-mean-y", "fbodyaccjerk-mean-z", "fbodyaccjerk-std-x", 
+                  "fbodyaccjerk-std-y", "fbodyaccjerk-std-z", "fbodyaccjerk-meanfreq-x", 
+                  "fbodyaccjerk-meanfreq-y", "fbodyaccjerk-meanfreq-z", "fbodygyro-mean-x", 
+                  "fbodygyro-mean-y", "fbodygyro-mean-z", "fbodygyro-std-x", 
+                  "fbodygyro-std-y", "fbodygyro-std-z", "fbodygyro-meanfreq-x", 
+                  "fbodygyro-meanfreq-y", "fbodygyro-meanfreq-z", "fbodyaccmag-mean", 
+                  "fbodyaccmag-std", "fbodyaccmag-meanfreq", "fbodybodyaccjerkmag-mean", 
+                  "fbodybodyaccjerkmag-std", "fbodybodyaccjerkmag-meanfreq", 
+                  "fbodybodygyromag-mean", "fbodybodygyromag-std", "fbodybodygyromag-meanfreq", 
+                  "fbodybodygyrojerkmag-mean", "fbodybodygyrojerkmag-std", 
+                  "fbodybodygyrojerkmag-meanfreq", "angle-tbodyaccmean", 
+                  "angle-tbodyaccjerkmean", "angle-tbodygyromean", 
+                  "angle-tbodygyrojerkmean", "angle-gravmean-x", 
+                  "angle-gravmean-y", "angle-gravmean-z)")
+
 # Save resulting dataset 
 write.csv(DF, "test_train.csv", row.names = FALSE)
 
@@ -118,3 +151,6 @@ DF3 <- DF %>%
 
 # Save resulting dataset 
 write.csv(DF3, "test_train_average.csv", row.names = FALSE)
+
+# save dataset for submission 
+write.table(DF3, "test_train_average.txt", row.names = FALSE)
